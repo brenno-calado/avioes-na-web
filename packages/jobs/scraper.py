@@ -15,13 +15,16 @@ def fetch(url: str) -> str:
         response.raise_for_status()
 
         return response.text
+    except requests.ConnectionError as connect_error:
+        print(connect_error)
+        return None
     except requests.HTTPError or requests.ConnectionError as http_error:
         print(http_error)
         return None
     except requests.ReadTimeout:
         return None
 
-black_list = ["#", "redlink=1", ":Citation_needed", "books.google"]
+black_list = ["#", "redlink=1", ":Citation_needed", "books.google", "ISBN_", "Special:", "archive.org"]
 
 def scrape_airplane_lists(html: str):
     WIKIPEDIA_MAIN_PAGE = "https://en.wikipedia.org"
@@ -44,7 +47,7 @@ def scrape_airplane_lists(html: str):
         print("writing file {f}".format(f=file.name))
         for li in source_selector.css(".mw-parser-output > ul li a"):
             url = "%s%s"%(WIKIPEDIA_MAIN_PAGE, li.xpath('.//@href').get().strip())
-            if not (url.__contains__("#") or url.__contains__("redlink=1") or url.__contains__(":Citation_needed")):
+            if not any(x in url for x in black_list):
                 file = open("temp/%s.txt"%filename, "a")
                 file.write("%s\n"%url)
                 file.close()
@@ -56,7 +59,7 @@ def scrape_airplane_lists(html: str):
 def xpath_b_sibling(text):
     return "//b[contains(text(),'%s')]/following-sibling::text()[1]"%text
 
-def scrape_airplane(path: str) -> 'list[dict]':
+def scrape_airplane(path: str):
     file = open(path)
 
     while file:
