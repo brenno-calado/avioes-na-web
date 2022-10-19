@@ -38,5 +38,5 @@ def scrape_airplane_lists(html: str):
             url = "%s%s"%(WIKIPEDIA_MAIN_PAGE, li.xpath('.//@href').get().strip())
             if not (url.__contains__("cite_note") or url.__contains__("index.php")):
                 file = open("%s.txt"%source[-15:], "a")
-                file.write(url)
+                file.write("%s\n"%url)
                 file.close()
