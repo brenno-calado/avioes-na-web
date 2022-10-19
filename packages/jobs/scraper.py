@@ -70,23 +70,31 @@ def scrape_airplane(path: str) -> 'list[dict]':
         selector = Selector(text=html)
 
         title = selector.xpath("//h1/descendant-or-self::*/text()").get()
-        role = selector.xpath("//th[contains(text(),'Role') or contains(text(), 'Type')]/following-sibling::td/text()").get()
+        role = selector.xpath("//th[contains(text(),'Role') or contains(text(), 'Type')]/following-sibling::td/descendant-or-self::*/text()").get()
         crew = selector.xpath(xpath_b_sibling('Crew:')).get()
         length = selector.xpath(xpath_b_sibling('Length:')).get()
         wingspan = selector.xpath(xpath_b_sibling('Wingspan:')).get()
         height = selector.xpath(xpath_b_sibling('Height:')).get()
         empty_weight = selector.xpath(xpath_b_sibling('Empty weight:')).get()
         max_speed = selector.xpath(xpath_b_sibling('Maximum speed:')).get()
+        cruise_speed = selector.xpath(xpath_b_sibling('Cruise speed:')).get()
+        image = selector.xpath("//table[@class='infobox']//img/@src").get()
+        source = selector.xpath("//link[@rel='canonical']/@href").get()
+        first_flight = selector.xpath("//th[contains(text(),'First flight') or contains(text(), 'Introduction')]/following-sibling::td/descendant-or-self::*/text()").get()
 
         airplane = {
             "Title": unicodedata.normalize("NFKD", title) if title else "",
             "Role": unicodedata.normalize("NFKD", role) if role else "",
+            "First Flight": unicodedata.normalize("NFKD", first_flight) if first_flight else "",
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
             "Length": unicodedata.normalize("NFKD", length) if length else "",
             "Wingspan": unicodedata.normalize("NFKD", wingspan) if wingspan else "",
             "Height": unicodedata.normalize("NFKD", height) if height else "",
             "Empty weight": unicodedata.normalize("NFKD", empty_weight) if empty_weight else "",
-            "Maximum speed": unicodedata.normalize("NFKD", max_speed) if max_speed else ""
+            "Maximum speed": unicodedata.normalize("NFKD", max_speed) if max_speed else "",
+            "Cruise speed": unicodedata.normalize("NFKD", cruise_speed) if cruise_speed else "",
+            "Image": "https:{0}".format(image) if image else "",
+            "Source": source
         }
 
         create_airplane(airplane)
