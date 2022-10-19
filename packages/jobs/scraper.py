@@ -59,7 +59,6 @@ def xpath_b_sibling(text):
 def scrape_airplane(path: str) -> 'list[dict]':
     file = open(path)
 
-
     while file:
         url = (file.readline()).strip()
         print(url)
@@ -70,7 +69,7 @@ def scrape_airplane(path: str) -> 'list[dict]':
 
         selector = Selector(text=html)
 
-        title = selector.css("#firstHeading").get()
+        title = selector.xpath("//h1/descendant-or-self::*/text()").get()
         role = selector.xpath("//th[contains(text(),'Role') or contains(text(), 'Type')]/following-sibling::td/text()").get()
         crew = selector.xpath(xpath_b_sibling('Crew:')).get()
         length = selector.xpath(xpath_b_sibling('Length:')).get()
