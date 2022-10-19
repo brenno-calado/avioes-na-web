@@ -2,3 +2,5 @@
 .eggs
 *.egg*
 *).txt
+*_of_*.txt
+.env
