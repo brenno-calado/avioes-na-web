@@ -11,7 +11,7 @@ def fetch(url: str) -> str:
     time.sleep(2)
 
     try:
-        response = requests.get(url, timeout=3)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
 
         return response.text
