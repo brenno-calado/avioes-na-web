@@ -1,10 +1,6 @@
-.container {
-  padding: 0 2rem;
-}
-
 .main {
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 2rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -56,74 +52,68 @@
   font-size: 1.5rem;
 }
 
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+.float {
+  width: 50%;
+  float: left;
+  padding: 1em;
 }
 
-.grid {
+.list {
+  padding-left: 0.5em;
+}
+
+.list li {
+  padding-bottom: 0.5em;
+}
+
+.header {
+  width: 100%;
+  height: 30vh;
+  background-image: url("/low-poly-biplane.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #64B9C8;
+}
+
+.mainButton {
+  padding: 1em;
+  background-color: #A4CEDA;
+  color: #252525;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mainButton:hover {
+  cursor: pointer;
+  background-color: #a4cedac9;
+}
+
+.mainButton:active {
+  background-color: #64B9C8;
+}
+
+.center {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  flex-direction: column;
 }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+.textCenter {
+  text-align: center;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.input {
+  background-color: #eaeaea;
+  border: none;
+  border-radius: 6px;
+  margin: 0 0 1em 0;
+  padding: 1em 0.5em;
+  width: 100%;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-}
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .card,
-  .footer {
-    border-color: #222;
-  }
-  .code {
-    background: #111;
-  }
-  .logo img {
-    filter: invert(1);
-  }
+.wrap {
+  word-wrap: break-word;
+  hyphens: auto;
 }
