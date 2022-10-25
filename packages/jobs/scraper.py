@@ -85,12 +85,17 @@ def scrape_airplane(path: str):
         cruise_speed = selector.xpath(xpath_b_sibling('Cruise speed:')).get()
         image = selector.xpath("//table[@class='infobox']//img/@src").get()
         source = selector.xpath("//link[@rel='canonical']/@href").get()
-        first_flight = selector.xpath("//th[contains(text(),'First flight') or contains(text(), 'Introduction')]/following-sibling::td/descendant-or-self::*/text()").get()
+
+        first_flight_main_selector = "//th[contains(text(),'First flight') or contains(text(), 'Introduction')]/following-sibling::td"
+        first_flight_descendant = selector.xpath(f"{first_flight_main_selector}/descendant::*/text()").get()
+        first_flight_self = selector.xpath(f"{first_flight_main_selector}/descendant-or-self::*/text()").get()
+
+        first_flight = f"{first_flight_self} {first_flight_descendant}" if first_flight_descendant else first_flight_self
 
         airplane = {
             "Title": unicodedata.normalize("NFKD", title) if title else "",
             "Role": unicodedata.normalize("NFKD", role) if role else "",
-            "First Flight": unicodedata.normalize("NFKD", first_flight) if first_flight else "",
+            "First Flight": first_flight,
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
             "Length": clean_number(length, "m"),
             "Wingspan": clean_number(wingspan, "m"),
