@@ -5,7 +5,7 @@ from urllib.parse import unquote
 
 import requests
 from database import create_airplane
-from clean_data import clean_data
+from clean_number import clean_number
 from parsel import Selector
 
 
@@ -92,16 +92,16 @@ def scrape_airplane(path: str):
             "Role": unicodedata.normalize("NFKD", role) if role else "",
             "First Flight": unicodedata.normalize("NFKD", first_flight) if first_flight else "",
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
-            "Length": clean_data(length, "m"),
-            "Wingspan": clean_data(wingspan, "m"),
-            "Height": clean_data(height, "m"),
-            "Empty weight": clean_data(empty_weight, "kg"),
-            "Maximum speed": clean_data(max_speed, "km/h"),
-            "Cruise speed": unicodedata.normalize("NFKD", cruise_speed) if cruise_speed else "",
+            "Length": clean_number(length, "m"),
+            "Wingspan": clean_number(wingspan, "m"),
+            "Height": clean_number(height, "m"),
+            "Empty weight": clean_number(empty_weight, "kg"),
+            "Maximum speed": clean_number(max_speed, "km/h"),
+            "Cruise speed": clean_number(cruise_speed, "km/h"),
             "Image": "https:{0}".format(image) if image else "",
             "Source": source
         }
 
-        # create_airplane(airplane)
+        create_airplane(airplane)
 
     file.close()
