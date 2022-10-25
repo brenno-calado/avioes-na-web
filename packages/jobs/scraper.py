@@ -1,9 +1,11 @@
 import os
 import time
 import unicodedata
+from urllib.parse import unquote
 
 import requests
 from database import create_airplane
+from clean_data import clean_data
 from parsel import Selector
 
 
@@ -39,7 +41,7 @@ def scrape_airplane_lists(html: str):
     for source in sources:
         html_list = fetch(source)
         source_selector = Selector(text=html_list)
-        filename = source[-15:]
+        filename = unquote(source[-15:])
 
         file = open("temp/%s.txt"%filename, "w")
         file.close()
@@ -90,16 +92,16 @@ def scrape_airplane(path: str):
             "Role": unicodedata.normalize("NFKD", role) if role else "",
             "First Flight": unicodedata.normalize("NFKD", first_flight) if first_flight else "",
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
-            "Length": unicodedata.normalize("NFKD", length) if length else "",
-            "Wingspan": unicodedata.normalize("NFKD", wingspan) if wingspan else "",
-            "Height": unicodedata.normalize("NFKD", height) if height else "",
-            "Empty weight": unicodedata.normalize("NFKD", empty_weight) if empty_weight else "",
-            "Maximum speed": unicodedata.normalize("NFKD", max_speed) if max_speed else "",
+            "Length": clean_data(length, "m"),
+            "Wingspan": clean_data(wingspan, "m"),
+            "Height": clean_data(height, "m"),
+            "Empty weight": clean_data(empty_weight, "kg"),
+            "Maximum speed": clean_data(max_speed, "km/h"),
             "Cruise speed": unicodedata.normalize("NFKD", cruise_speed) if cruise_speed else "",
             "Image": "https:{0}".format(image) if image else "",
             "Source": source
         }
 
-        create_airplane(airplane)
+        # create_airplane(airplane)
 
     file.close()
