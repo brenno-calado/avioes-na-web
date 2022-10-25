@@ -6,6 +6,7 @@ from urllib.parse import unquote
 import requests
 from database import create_airplane
 from clean_number import clean_number
+from clean_role import clean_role
 from parsel import Selector
 
 
@@ -75,7 +76,12 @@ def scrape_airplane(path: str):
         selector = Selector(text=html)
 
         title = selector.xpath("//h1/descendant-or-self::*/text()").get()
-        role = selector.xpath("//th[contains(text(),'Role') or contains(text(), 'Type')]/following-sibling::td/descendant-or-self::*/text()").get()
+        role_main_selector = "//th[contains(text(),'Role') or contains(text(), 'Type')]/following-sibling::td"
+        role_descendant = selector.xpath(f"{role_main_selector}/descendant::*/text()").get()
+        role_self = selector.xpath(f"{role_main_selector}/text()").get()
+
+        role = f"{role_self} {role_descendant}" if role_descendant else role_self
+
         crew = selector.xpath(xpath_b_sibling('Crew:')).get()
         length = selector.xpath(xpath_b_sibling('Length:')).get()
         wingspan = selector.xpath(xpath_b_sibling('Wingspan:')).get()
@@ -88,13 +94,13 @@ def scrape_airplane(path: str):
 
         first_flight_main_selector = "//th[contains(text(),'First flight') or contains(text(), 'Introduction')]/following-sibling::td"
         first_flight_descendant = selector.xpath(f"{first_flight_main_selector}/descendant::*/text()").get()
-        first_flight_self = selector.xpath(f"{first_flight_main_selector}/descendant-or-self::*/text()").get()
+        first_flight_self = selector.xpath(f"{first_flight_main_selector}/text()").get()
 
         first_flight = f"{first_flight_self} {first_flight_descendant}" if first_flight_descendant else first_flight_self
 
         airplane = {
             "Title": unicodedata.normalize("NFKD", title) if title else "",
-            "Role": unicodedata.normalize("NFKD", role) if role else "",
+            "Role": clean_role(role),
             "First Flight": first_flight,
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
             "Length": clean_number(length, "m"),
@@ -107,6 +113,8 @@ def scrape_airplane(path: str):
             "Source": source
         }
 
-        create_airplane(airplane)
+        print(airplane)
+
+        # create_airplane(airplane)
 
     file.close()
