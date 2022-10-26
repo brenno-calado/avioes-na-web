@@ -7,6 +7,7 @@ import requests
 from database import create_airplane
 from clean_number import clean_number
 from clean_role import clean_role
+from clean_date import clean_date
 from parsel import Selector
 
 
@@ -101,7 +102,7 @@ def scrape_airplane(path: str):
         airplane = {
             "Title": unicodedata.normalize("NFKD", title) if title else "",
             "Role": clean_role(role),
-            "First Flight": first_flight,
+            "First Flight": clean_date(first_flight),
             "Crew": unicodedata.normalize("NFKD", crew) if crew else "",
             "Length": clean_number(length, "m"),
             "Wingspan": clean_number(wingspan, "m"),
