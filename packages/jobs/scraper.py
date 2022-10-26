@@ -114,8 +114,6 @@ def scrape_airplane(path: str):
             "Source": source
         }
 
-        print(airplane)
-
-        # create_airplane(airplane)
+        create_airplane(airplane)
 
     file.close()
