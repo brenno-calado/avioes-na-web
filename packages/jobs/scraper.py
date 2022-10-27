@@ -27,10 +27,12 @@ def fetch(url: str) -> str:
         return None
     except requests.ReadTimeout:
         return None
+    except requests.exceptions.InvalidURL:
+        return None
 
 black_list = ["#", "redlink=1", ":Citation_needed", "books.google", "ISBN_", "Special:", "archive.org"]
 
-def scrape_airplane_lists(html: str):
+def save_airplane_lists(html: str):
     WIKIPEDIA_MAIN_PAGE = "https://en.wikipedia.org"
 
     selector = Selector(text=html)
@@ -56,6 +58,7 @@ def scrape_airplane_lists(html: str):
                 file.write("%s\n"%url)
                 file.close()
 
+def scrape_airplane_files():
     temp_files = os.listdir("temp")
 
     for file in temp_files: scrape_airplane("temp/{f}".format(f=file))
