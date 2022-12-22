@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -28,14 +28,14 @@ const Home: NextPage = () => {
           <div className={`${styles.float} ${styles.center}`}>
             <h2 className={styles.textCenter}>Ranking</h2>
             <ul className={styles.list}>
-              <li>Mais rápidos</li>
-              <li>Mais lentos</li>
-              <li>Mais pesados</li>
-              <li>Mais leves</li>
-              <li>Mais curtos</li>
-              <li>Mais longos</li>
-              <li>Mais novos</li>
-              <li>Mais antigos</li>
+              <li><Link href="/ranking-fastest">Mais rápidos</Link></li>
+              <li><Link href="/ranking-slowest">Mais lentos</Link></li>
+              <li><Link href="/ranking-heaviest">Mais pesados</Link></li>
+              <li><Link href="/ranking-lightest">Mais leves</Link></li>
+              <li><Link href="/ranking-shortest">Mais curtos</Link></li>
+              <li><Link href="/ranking-longest">Mais longos</Link></li>
+              <li><Link href="/ranking-newest">Mais novos</Link></li>
+              <li><Link href="/ranking-oldest">Mais antigos</Link></li>
             </ul>
           </div>
           <div className={`${styles.float} ${styles.center}`}>
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a>Feito com 💚 por Brenno Calado</a>
+        <a href="https://github.com/brenno-calado">Feito com 💚 por Brenno Calado</a>
       </footer>
     </div>
   )
