@@ -1,12 +1,15 @@
 import { InferGetServerSidePropsType } from "next";
+import { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import styles from "../styles/Ranking.module.css";
+import Link from "next/link";
 
 type Airplane = {
   Title: string;
   "Maximum speed": string;
   Image: string;
+  Source: string;
 };
 
 const renderAirplane = (airplane: Airplane, index: number) => {
@@ -21,13 +24,29 @@ const renderAirplane = (airplane: Airplane, index: number) => {
           height={200}
         />
       }
-      <p> {airplane.Title}</p>
+      <br />
+      <Link href={airplane.Source}>{airplane.Title}</Link>
       <p>Maximum Speed: {airplane["Maximum speed"]} km/h</p>
     </div>
   );
 };
 
 const RankingFastest = ({ ranking }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [data, setRanking] = useState(ranking);
+
+  const fetchData = async () => {
+    const req = await fetch("http://localhost:8080/v1/airplanes/fastest?page=2");
+    const result = await req.json();
+    const newData = [...data, ...result];
+    setRanking(newData);
+  };
+
+  const handleClick = (event: any) => {
+    event.preventDefault();
+
+    fetchData();
+  };
+
   return (
     <>
       <Head>
@@ -39,6 +58,7 @@ const RankingFastest = ({ ranking }: InferGetServerSidePropsType<typeof getServe
         <section>
           {ranking.map((airplane: Airplane, index) => renderAirplane(airplane, index))}
         </section>
+        <button onClick={handleClick}>Next</button>
       </main>
     </>
   );

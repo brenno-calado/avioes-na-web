@@ -1,10 +1,13 @@
-import * as mongoose from "mongoose";
 import { Airplanes } from "../models/airplanes";
-import { Query } from "../models/query";
 import airplaneSchema from "../schemas/airplane.schema";
+import BaseRepository from "./base/base.repository";
 
-class AirplaneRepository {
+class AirplaneRepository extends BaseRepository<Airplanes> {
   private static instance: AirplaneRepository;
+
+  constructor() {
+    super("Airplanes", airplaneSchema);
+  }
 
   static getInstance() {
     if (!AirplaneRepository.instance) {
@@ -12,27 +15,6 @@ class AirplaneRepository {
     }
 
     return AirplaneRepository.instance;
-  }
-
-  private async connect(): Promise<mongoose.Model<Airplanes>> {
-    await mongoose.connect(String(process.env.DB_URI));
-    return mongoose.model("Airplanes", airplaneSchema);
-  }
-
-  private async disconnect(): Promise<void> {
-    return mongoose.disconnect();
-  }
-
-  async findAll(
-    filter: mongoose.FilterQuery<Airplanes>,
-    sort: { [key: string]: mongoose.SortOrder | { $meta: "textScore" } },
-    query: Query
-  ) {
-    const skipAmount = (query.page - 1) * query.take;
-    const repository = await this.connect();
-    const documents = await repository.find(filter).sort(sort).skip(skipAmount).limit(10);
-    await this.disconnect();
-    return documents;
   }
 }
 
