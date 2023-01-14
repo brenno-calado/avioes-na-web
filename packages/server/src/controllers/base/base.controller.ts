@@ -10,11 +10,15 @@ abstract class BaseController<T> {
       take: query.take ? query.take : 10,
     };
 
-    return this.repository.findAll(
+    return this.repository.findAndRank(
       { [`${property}`]: { $ne: null } },
       { [`${property}`]: ascending ? 1 : -1 },
       normalQuery
     );
+  }
+
+  async findAllUnique(property: string) {
+    return this.repository.findAllUnique(property);
   }
 }
 

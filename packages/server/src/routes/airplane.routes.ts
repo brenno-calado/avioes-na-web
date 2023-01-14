@@ -5,6 +5,19 @@ const airplaneController = AirplaneController.getInstance();
 const airplaneRouter = express.Router();
 
 airplaneRouter.get(
+  "/role",
+  async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+      const response = await airplaneController.findAllUnique("Role");
+      console.log(response);
+      return res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+airplaneRouter.get(
   "/fastest",
   async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
@@ -38,6 +51,8 @@ airplaneRouter.get(
         "Maximum speed",
         true
       );
+      console.log(response);
+
       return res.status(200).send(response);
     } catch (error) {
       next(error);

@@ -14,7 +14,7 @@ abstract class BaseRepository<T> {
     return mongoose.disconnect();
   }
 
-  async findAll(
+  async findAndRank(
     filter: mongoose.FilterQuery<Airplanes>,
     sort: { [key: string]: mongoose.SortOrder | { $meta: "textScore" } },
     query: Query
@@ -22,6 +22,13 @@ abstract class BaseRepository<T> {
     const skipAmount = (query.page - 1) * query.take;
     const repository = await this.connect(this.collection, this.schema);
     const documents = await repository.find(filter).sort(sort).skip(skipAmount).limit(query.take);
+    await this.disconnect();
+    return documents;
+  }
+
+  async findAllUnique(property: string) {
+    const repository = await this.connect(this.collection, this.schema);
+    const documents = await repository.find().distinct(property);
     await this.disconnect();
     return documents;
   }
