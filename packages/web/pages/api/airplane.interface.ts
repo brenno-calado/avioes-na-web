@@ -4,4 +4,5 @@ export type Airplane = {
   Image: string;
   Source: string;
   Role: string;
+  "Empty weight": string;
 };

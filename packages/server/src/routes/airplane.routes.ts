@@ -60,4 +60,27 @@ airplaneRouter.get(
   }
 );
 
+airplaneRouter.get(
+  "/heaviest",
+  async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+      const { page, take } = req.query;
+
+      const response = await airplaneController.findAndRank(
+        {
+          page: Number(page),
+          take: Number(take),
+        },
+        "Empty weight",
+        true
+      );
+      console.log(response);
+
+      return res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default airplaneRouter;
