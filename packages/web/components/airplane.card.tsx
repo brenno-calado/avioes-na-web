@@ -3,7 +3,18 @@ import Link from "next/link";
 import { Airplane } from "../pages/api/airplane.interface";
 import styles from "../styles/Ranking.module.css";
 
-export const renderAirplane = (airplane: Airplane, index: number) => {
+export const renderAirplane = (airplane: Airplane, index: number, rank: keyof Airplane) => {
+  function airplaneKeyMetric(key: keyof Airplane) {
+    switch (key) {
+      case "Empty weight":
+        return "kg";
+      case "Maximum speed":
+        return "km/h";
+      default:
+        return "";
+    }
+  }
+
   return (
     <div key={index} className={styles.card}>
       <h2>{index + 1}º</h2>
@@ -18,7 +29,9 @@ export const renderAirplane = (airplane: Airplane, index: number) => {
       <br />
       <Link href={airplane.Source}>{airplane.Title}</Link>
       {airplane.Role && <p>Role: {airplane.Role}</p>}
-      <p>Maximum Speed: {airplane["Maximum speed"]} km/h</p>
+      <p>
+        {rank}: {airplane[rank]} {airplaneKeyMetric(rank)}
+      </p>
     </div>
   );
 };
