@@ -8,7 +8,7 @@ airplaneRouter.get(
   "/role",
   async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
     try {
-      const response = await airplaneController.findAllUnique("Role");
+      const response = await airplaneController.findAllUnique("role");
       return res.status(200).send(response);
     } catch (error) {
       next(error);
@@ -26,7 +26,7 @@ airplaneRouter.get(
           page: Number(page),
           take: Number(take),
         },
-        "Maximum speed",
+        "maximumSpeed",
         false
       );
       return res.status(200).send(response);
@@ -47,7 +47,7 @@ airplaneRouter.get(
           page: Number(page),
           take: Number(take),
         },
-        "Maximum speed",
+        "maximumSpeed",
         true
       );
 
@@ -69,7 +69,7 @@ airplaneRouter.get(
           page: Number(page),
           take: Number(take),
         },
-        "Empty weight",
+        "emptyWeight",
         false
       );
 
@@ -91,7 +91,7 @@ airplaneRouter.get(
           page: Number(page),
           take: Number(take),
         },
-        "Empty weight",
+        "emptyWeight",
         true
       );
 

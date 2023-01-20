@@ -15,7 +15,7 @@ const RankingLightest = ({ ranking }: InferGetServerSidePropsType<typeof getServ
         <h1>Top 10 lightest planes</h1>
         <section>
           {ranking.map((airplane: Airplane, index) =>
-            renderAirplane(airplane, index, "Empty weight")
+            renderAirplane(airplane, index, "emptyWeight")
           )}
         </section>
       </main>

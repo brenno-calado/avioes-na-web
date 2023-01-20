@@ -15,7 +15,7 @@ const RankingSlowest = ({ ranking }: InferGetServerSidePropsType<typeof getServe
         <h1>Bottom 10 slowest planes</h1>
         <section>
           {ranking.map((airplane: Airplane, index) =>
-            renderAirplane(airplane, index, "Maximum speed")
+            renderAirplane(airplane, index, "maximumSpeed")
           )}
         </section>
       </main>

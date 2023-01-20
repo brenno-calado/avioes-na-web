@@ -6,12 +6,23 @@ import styles from "../styles/Ranking.module.css";
 export const renderAirplane = (airplane: Airplane, index: number, rank: keyof Airplane) => {
   function airplaneKeyMetric(key: keyof Airplane) {
     switch (key) {
-      case "Empty weight":
+      case "emptyWeight":
         return "kg";
-      case "Maximum speed":
+      case "maximumSpeed":
         return "km/h";
       default:
         return "";
+    }
+  }
+
+  function airplaneKeyName(key: keyof Airplane) {
+    switch (key) {
+      case "emptyWeight":
+        return "Empty weight";
+      case "maximumSpeed":
+        return "Maximum speed";
+      default:
+        return key;
     }
   }
 
@@ -20,17 +31,17 @@ export const renderAirplane = (airplane: Airplane, index: number, rank: keyof Ai
       <h2>{index + 1}º</h2>
       {
         <Image
-          src={airplane.Image ? airplane.Image : "/low-poly-biplane.png"}
-          alt={airplane.Title}
+          src={airplane.image ? airplane.image : "/low-poly-biplane.png"}
+          alt={airplane.title}
           width={200}
           height={200}
         />
       }
       <br />
-      <Link href={airplane.Source}>{airplane.Title}</Link>
-      {airplane.Role && <p>Role: {airplane.Role}</p>}
+      <Link href={airplane.source}>{airplane.title}</Link>
+      {airplane.role && <p>Role: {airplane.role}</p>}
       <p>
-        {rank}: {airplane[rank]} {airplaneKeyMetric(rank)}
+        {airplaneKeyName(rank)}: {airplane[rank]} {airplaneKeyMetric(rank)}
       </p>
     </div>
   );

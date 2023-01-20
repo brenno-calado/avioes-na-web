@@ -1,15 +1,15 @@
 export interface Airplanes {
   _id: String;
-  Title: String;
-  Role: String;
-  "First Flight": String;
-  Crew: String;
-  Length: String;
-  Wingspan: String;
-  Height: String;
-  "Empty Weight": String;
-  "Maximum speed": String;
-  "Cruise Speed": String;
-  Image: String;
-  Source: String;
+  title: String;
+  role: String;
+  firstFlight: String;
+  crew: String;
+  length: String;
+  wingspan: String;
+  height: String;
+  emptyWeight: String;
+  maximumSpeed: String;
+  cruiseSpeed: String;
+  image: String;
+  source: String;
 }

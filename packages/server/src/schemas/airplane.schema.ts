@@ -3,18 +3,18 @@ import { Airplanes } from "../models/airplanes";
 
 const airplaneSchema = new Schema<Airplanes>({
   _id: String,
-  "Cruise Speed": String,
-  "Empty Weight": String,
-  "First Flight": String,
-  Crew: String,
-  Height: String,
-  Image: String,
-  Length: String,
-  Role: String,
-  Wingspan: String,
-  Source: String,
-  Title: String,
-  "Maximum speed": String,
+  cruiseSpeed: String,
+  emptyWeight: String,
+  firstFlight: String,
+  crew: String,
+  height: String,
+  image: String,
+  length: String,
+  role: String,
+  wingspan: String,
+  source: String,
+  title: String,
+  maximumSpeed: String,
 });
 
 export default airplaneSchema;
