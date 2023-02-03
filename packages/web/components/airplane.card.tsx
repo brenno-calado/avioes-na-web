@@ -10,6 +10,8 @@ export const renderAirplane = (airplane: Airplane, index: number, rank: keyof Ai
         return "kg";
       case "maximumSpeed":
         return "km/h";
+      case "length":
+        return "m";
       default:
         return "";
     }

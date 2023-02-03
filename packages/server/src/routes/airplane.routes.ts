@@ -102,4 +102,48 @@ airplaneRouter.get(
   }
 );
 
+airplaneRouter.get(
+  "/shortest",
+  async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+      const { page, take } = req.query;
+
+      const response = await airplaneController.findAndRank(
+        {
+          page: Number(page),
+          take: Number(take),
+        },
+        "length",
+        true
+      );
+
+      return res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+airplaneRouter.get(
+  "/longest",
+  async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+      const { page, take } = req.query;
+
+      const response = await airplaneController.findAndRank(
+        {
+          page: Number(page),
+          take: Number(take),
+        },
+        "length",
+        false
+      );
+
+      return res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default airplaneRouter;

@@ -13,7 +13,9 @@ abstract class BaseController<T> {
     return this.repository.findAndRank(
       {
         [`${property}`]: { $ne: null },
-        role: { $not: /helicopter|glider|car|parachute|paramotor|rotor|airship|Extraterrestrial/i },
+        role: {
+          $not: /helicopter|glider|car|parachute|paramotor|rotor|trike|unmanned|UAV|drone|munition|airship|Extraterrestrial/i,
+        },
       },
       { [`${property}`]: ascending ? 1 : -1 },
       normalQuery
